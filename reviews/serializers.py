@@ -3,7 +3,23 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_flex_fields import FlexFieldsModelSerializer
 from versatileimagefield.serializers import VersatileImageFieldSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+
+# Default payload includes the user_id. You can add any information you want, you just have to modify the claim.
+
+# For add claims to payload we need to create a subclass for TokenObtainPairView as well as a subclass for 
+# TokenObtainPairSerializer.
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    @classmethod
+    def get_token(cls, user):
+        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
+
+        # add custom claims
+        token['username'] = user.username
+        return token
 
 class CompanySerializer(FlexFieldsModelSerializer):
     class Meta:

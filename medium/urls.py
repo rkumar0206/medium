@@ -15,11 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
-from reviews.views import ProductViewSet, ImageViewSet
+from reviews.views import ProductViewSet, ImageViewSet, MyObtainTokenPairView
 from rest_framework.routers import DefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import(
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
+# learn more about the jwt authenticaton here : https://medium.com/django-rest/django-rest-framework-jwt-authentication-94bee36f2af8
 
 router = DefaultRouter()
 router.register(r'product', ProductViewSet, basename = 'Product')
@@ -28,6 +33,8 @@ router.register(r'image', ImageViewSet, basename='Image')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url('token/', MyObtainTokenPairView.as_view(), name = 'token_obtain_pair'),
+    url('token/refresh/', TokenRefreshView.as_view(), name = 'token_refresh'),
     url(r'^', include(router.urls)),
 ]
 
