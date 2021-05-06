@@ -1,16 +1,12 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from .serializers import ProductSerializer, ImageSerializer, MyTokenObtainPairSerializer
+from .serializers import ProductSerializer, ImageSerializer
 from .models import Product, Image
 from rest_framework.decorators import action
 from rest_flex_fields.views import FlexFieldsMixin, FlexFieldsModelViewSet
 from rest_flex_fields import is_expanded
 import django_filters.filterset
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import IsAuthenticated
 
-class MyObtainTokenPairView(TokenObtainPairView):
-    permission_classes = (AllowAny,)
-    serializer_class = MyTokenObtainPairSerializer
 
 class ImageViewSet(FlexFieldsModelViewSet):
     queryset = Image.objects.all()
