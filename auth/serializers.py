@@ -9,15 +9,15 @@ from django.contrib.auth.password_validation import validate_password
 # For add claims to payload we need to create a subclass for TokenObtainPairView as well as a subclass for 
 # TokenObtainPairSerializer.
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
-    @classmethod
-    def get_token(cls, user):
-        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
+#     @classmethod
+#     def get_token(cls, user):
+#         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
 
-        # add custom claims
-        token['username'] = user.username
-        return token
+#         # add custom claims
+#         token['username'] = user.username
+#         return token
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
